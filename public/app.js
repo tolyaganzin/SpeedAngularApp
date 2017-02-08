@@ -27,7 +27,7 @@ angular
           .state('edit', {
               url: '/edit/:index',
               templateUrl: '/views/editView.html',
-              controller: 'MainController as main'
+              controller: 'MainController as main'              
           });
   }
 
