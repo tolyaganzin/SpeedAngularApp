@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "server for SpeedAngularApp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tolyaganzin/SpeedAngularApp.git"
+  },
+  "keywords": [
+    "express",
+    "task3",
+    "angular"
+  ],
+  "author": "tolyaganzin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tolyaganzin/SpeedAngularApp/issues"
+  },
+  "homepage": "https://github.com/tolyaganzin/SpeedAngularApp#readme",
+  "dependencies": {
+    "express": "^4.14.1"
+  }
+}
