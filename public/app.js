@@ -25,9 +25,10 @@ angular
               controller: 'MainController as main'
           })
           .state('edit', {
-              url: '/edit/:index',
+              url: '/edit/',
+              params: { user: null },
               templateUrl: '/views/editView.html',
-              controller: 'MainController as main'              
+              controller: 'MainController as main'
           });
   }
 

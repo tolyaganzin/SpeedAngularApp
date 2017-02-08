@@ -4,17 +4,26 @@
       .module('app')
       .controller('MainController', MainController);
 
-    MainController.$inject = ['$localStorage', '$stateParams', '$state'];
+    MainController.$inject = ['$localStorage', '$stateParams', '$state', '$http'];
 
-    function MainController($localStorage, $stateParams, $state) {
+    function MainController($localStorage, $stateParams, $state, $http) {
 
       var vm = this;
       vm.url = "views/mainView.html";
-      vm.$storage = $localStorage.$default({users: []});
+      vm.users = [];
+      // vm.$storage = $localStorage.$default({users: []});
       vm.name = '';
 
-      if ($stateParams.index != undefined) {
-        vm.name = vm.$storage.users[$stateParams.index].name;
+
+      if ($stateParams.user != undefined) {
+        vm.name = $stateParams.user.name;
+      } else {
+        $http.get('http://localhost:3300/api/get-users')
+        .then(function successCallback(response) {
+          vm.users = response.data;
+        }, function errorCallback(response) {
+          console.log(response);
+        });
       }
 
       vm.submitEnter = submitEnter;
@@ -33,26 +42,43 @@
 
       function addItemToTable() {
         if(vm.name) {
-          vm.$storage.users.push({name: vm.name});
+          $http.put('http://localhost:3300/api/add-user', {name: vm.name})
+          .then(function successCallback(response) {
+            vm.users = response.data;
+          }, function errorCallback(response) {
+            console.log(response);
+          });
+          //vm.$storage.users.push({name: vm.name});
           vm.name = '';
         }
       }
 
-      function editItemTable(index) {
-        $state.go('edit', {"index": index});
+      function editItemTable(user) {
+        console.log(user);
+        $state.go('edit', {user: {
+          _id: user._id,
+          name: user.name
+        }});
       }
 
-      function deleteItemFromTable(index) {
-        vm.$storage.users.splice(index, 1);
+      function deleteItemFromTable(user) {
+
+        $http.delete('http://localhost:3300/api/del-user/' + user._id)
+        .then(function successCallback(response) {
+          vm.users = response.data;        
+        }, function errorCallback(response) {
+          console.log(response);
+        });
+        // vm.$storage.users.splice(index, 1);
       }
 
       function submit() {
-        vm.$storage.users.splice($stateParams.index, 1, {name: vm.name});
-        $localStorage.$reset({users: vm.$storage.users});
+        // vm.$storage.users.splice($stateParams.index, 1, {name: vm.name});
+        // $localStorage.$reset({users: vm.$storage.users});
+        //
+        // console.log($localStorage.users[$stateParams.index]);
+        // console.log($localStorage);
 
-        console.log($localStorage.users[$stateParams.index]);
-        console.log($localStorage);
-        
         $state.go('main');
       }
 

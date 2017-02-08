@@ -11,12 +11,12 @@
       ACTIONS
     </th>
   </tr>
-  <tr ng-repeat="user in main.$storage.users track by $index">
+  <tr ng-repeat="user in main.users track by $index">
     <td>{{$index+1}}</td>
     <td>{{user.name}}</td>
     <td>
-      <button class="btn btn-info" ng-click="main.editItemTable($index)">edit</button>
-      <button class="btn btn-danger" ng-click="main.deleteItemFromTable($index)">delete</button>
+      <button class="btn btn-info" ng-click="main.editItemTable(user)">edit</button>
+      <button class="btn btn-danger" ng-click="main.deleteItemFromTable(user)">delete</button>
     </td>
   </tr>
 </table>
