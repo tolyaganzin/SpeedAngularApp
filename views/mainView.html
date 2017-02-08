@@ -1,0 +1,22 @@
+<h2>Main</h2>
+<div class="input-group">
+  <input type="text" class="form-control" placeholder="Name" aria-describedby="add-name" ng-model="main.name" ng-keyup="main.submitEnter($event.keyCode)">
+  <span class="input-group-addon" id="add-name" ng-click="main.addItemToTable()">add</span>
+</div>
+<table class="table table-striped">
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>
+      ACTIONS
+    </th>
+  </tr>
+  <tr ng-repeat="user in main.$storage.users track by $index">
+    <td>{{$index+1}}</td>
+    <td>{{user.name}}</td>
+    <td>
+      <button class="btn btn-info" ng-click="main.editItemTable($index)">edit</button>
+      <button class="btn btn-danger" ng-click="main.deleteItemFromTable($index)">delete</button>
+    </td>
+  </tr>
+</table>
