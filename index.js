@@ -9,12 +9,7 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(express.static('public'));
 
-// var Db = require('mongodb').Db;
-// var MongoClient = require('mongodb').MongoClient;
-// var Server = require('mongodb').Server;
-// var ObjectId = require('mongodb').ObjectId;
 
-// var db = new Db('SpeedAngularApp', new Server('localhost', 27017));
 ////////////////////// Routes
 // api
 app.use('/api/v1', require('./routes/api/v1/index'));
