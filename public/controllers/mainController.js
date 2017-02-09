@@ -11,9 +11,7 @@
       var vm = this;
       vm.url = "views/mainView.html";
       vm.users = [];
-      // vm.$storage = $localStorage.$default({users: []});
       vm.name = '';
-
 
       if ($stateParams.user != undefined) {
         vm.name = $stateParams.user.name;
