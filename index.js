@@ -19,41 +19,51 @@ app.get('/api', function (req, res) {
     res.send('API is running');
 });
 
-
 app.get('/api/get-users', function(req, res) {
-
   db.open(function(err, db) {
-    // Fetch a collection to insert document into
     var collection = db.collection("users");
-    // Find a all
+    // Get a all
     collection.find().toArray(function(err, result) {
       res.send(result);
       db.close();
-     });
-  });
-});
+    }); //collection
+  }); //db
+}); //app
 
 app.put('/api/add-user', function (req, res){
   db.open(function(err, db) {
-  // Fetch a collection to insert document into
     var collection = db.collection("users");
     //  Isert a one
     collection.insert(req.body);
     collection.find().toArray(function(err, result) {
       res.send(result);
       db.close();
-    });
-  });
-});
+    }); //collection
+  }); //db
+}); //app
+
+app.put('/api/update-user/:_id', function (req, res){
+  db.open(function(err, db) {
+    var collection = db.collection("users");
+    //  Update a one
+    collection.update({"_id": new ObjectId(req.params._id)}, req.body, function(err, result) {
+        if (err) {
+          console.log(err);
+          res.send(result);
+          db.close();
+        } else {
+          res.send(result);
+          db.close();
+        }
+    }); //collection
+  }); //db
+}); //app
+
 app.delete('/api/del-user/:_id', function (req, res){
   db.open(function(err, db) {
-  // Fetch a collection to insert document into
     var collection = db.collection("users");
-    // collection.remove({"_id": req.params._id}, function(err, numberOfRemovedDocs) {
-    //   console.log(req.params);
-    // });
-    console.log(req.params._id);
-    collection.remove({_id: new ObjectId(req.params._id)}, function(err, result) {
+    // Delete a one
+    collection.remove({_id: new ObjectId(req.params._id)}, function(err) {
         if (err) {
             console.log(err);
             db.close();
@@ -63,26 +73,9 @@ app.delete('/api/del-user/:_id', function (req, res){
             db.close();
           });
         }
-    });
-
-  });
-});
-
-
-
-// app.get('/api/articles/:id', function(req, res) {
-//     res.send('This is not implemented now');
-// });
-//
-// app.put('/api/articles/:id', function (req, res){
-//     res.send('This is not implemented now');
-// });
-//
-// app.delete('/api/articles/:id', function (req, res){
-//     res.send('This is not implemented now');
-// });
-
-
+    }); //collection
+  }); //db
+}); //app
 
 app.get('*', function (req, res) {
   res.sendFile(__dirname + '/public/index.html');

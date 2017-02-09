@@ -34,15 +34,17 @@
 
       vm.submit = submit;
 
+      //submit on key enter (main page)
       function submitEnter(key) {
         if(key == 13) {
           vm.addItemToTable();
         }
       }
 
+      //insert
       function addItemToTable() {
         if(vm.name) {
-          $http.put('http://localhost:3300/api/add-user', {name: vm.name})
+          $http.put('http://localhost:3300/api/add-user/', {name: vm.name})
           .then(function successCallback(response) {
             vm.users = response.data;
           }, function errorCallback(response) {
@@ -53,33 +55,38 @@
         }
       }
 
+      //selected user and go to edit state
       function editItemTable(user) {
-        console.log(user);
         $state.go('edit', {user: {
           _id: user._id,
           name: user.name
         }});
       }
 
+      // Delete
       function deleteItemFromTable(user) {
 
         $http.delete('http://localhost:3300/api/del-user/' + user._id)
         .then(function successCallback(response) {
-          vm.users = response.data;        
+          vm.users = response.data;
         }, function errorCallback(response) {
           console.log(response);
         });
-        // vm.$storage.users.splice(index, 1);
+
       }
 
+      // Update
       function submit() {
-        // vm.$storage.users.splice($stateParams.index, 1, {name: vm.name});
-        // $localStorage.$reset({users: vm.$storage.users});
-        //
-        // console.log($localStorage.users[$stateParams.index]);
-        // console.log($localStorage);
 
-        $state.go('main');
+        $http.put('http://localhost:3300/api/update-user/' + $stateParams.user._id, JSON.stringify({name: vm.name}))
+        .then(function successCallback(response) {
+          $state.go('main');
+        }, function errorCallback(response) {
+          console.log(response);
+          $state.go('main');
+        });
+
+
       }
 
     }
