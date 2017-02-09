@@ -16,7 +16,7 @@
       if ($stateParams.user != undefined) {
         vm.name = $stateParams.user.name;
       } else {
-        $http.get('http://localhost:3300/api/get-users')
+        $http.get('http://localhost:3300/api/v1/user/get-users')
         .then(function successCallback(response) {
           vm.users = response.data;
         }, function errorCallback(response) {
@@ -42,7 +42,7 @@
       //insert
       function addItemToTable() {
         if(vm.name) {
-          $http.put('http://localhost:3300/api/add-user/', {name: vm.name})
+          $http.put('http://localhost:3300/api/v1/user/add-user/', {name: vm.name})
           .then(function successCallback(response) {
             vm.users = response.data;
           }, function errorCallback(response) {
@@ -64,7 +64,7 @@
       // Delete
       function deleteItemFromTable(user) {
 
-        $http.delete('http://localhost:3300/api/del-user/' + user._id)
+        $http.delete('http://localhost:3300/api/v1/user/del-user/' + user._id)
         .then(function successCallback(response) {
           vm.users = response.data;
         }, function errorCallback(response) {
@@ -76,7 +76,7 @@
       // Update
       function submit() {
 
-        $http.put('http://localhost:3300/api/update-user/' + $stateParams.user._id, JSON.stringify({name: vm.name}))
+        $http.put('http://localhost:3300/api/v1/user/update-user/' + $stateParams.user._id, JSON.stringify({name: vm.name}))
         .then(function successCallback(response) {
           $state.go('main');
         }, function errorCallback(response) {
