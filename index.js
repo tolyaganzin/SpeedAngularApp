@@ -3,12 +3,22 @@ var path    = require("path");
 var app = express();
 // var config          = require('./libs/config');
 var bodyParser = require('body-parser');
+var Db = require('mongodb').Db;
+var Server = require('mongodb').Server;
+// var ObjectId = require('mongodb').ObjectId;
+var db = new Db('SpeedAngularApp', new Server('localhost', 27017));
 
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(express.static('public'));
 
+// Make our db accessible to our router
+app.use(function(req,res,next){
+    req.db = db;
+    next();
+});
+//////////////////////////////
 
 ////////////////////// Routes
 // api
